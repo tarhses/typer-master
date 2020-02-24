@@ -8,7 +8,7 @@ Game.__index = Game
 
 local RIGHT_BONUS = 5
 local WRONG_MALUS = 3
-local DURATION = 5--2 * 60 + 1
+local DURATION = 2 * 60 + 1
 
 --- Convert a time to a readable format (mm:ss).
 -- @param timer given time (in seconds)
@@ -119,6 +119,14 @@ function Game:draw()
   
   for _, word in ipairs(self.words) do
     word:draw()
+  end
+end
+
+--- Handle key pressed.
+-- @param key the pressed key
+function Game:key_pressed(key)
+  if key == "escape" then
+    self.states:set(require("start_menu").new(self.font))
   end
 end
 
