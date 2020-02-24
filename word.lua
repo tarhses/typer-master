@@ -46,7 +46,7 @@ function Word:draw()
 end
 
 --- Tween the word attributes.
--- @see tween.lua
+-- @see hump.timer
 function Word:tween(duration, ...)
   Timer.tween(duration, self, ...)
 end

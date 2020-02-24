@@ -12,6 +12,7 @@ end
 
 --- Create a new Leaderboard state.
 -- @param font the font used to display text
+-- @param name the name of the player
 -- @param score score of the player
 -- @param n_words number of words completed during the game
 -- @param n_letters number of letters completed during the game

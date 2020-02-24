@@ -126,6 +126,7 @@ end
 -- @param key the pressed key
 function Game:key_pressed(key)
   if key == "escape" then
+    -- TODO: fix cyclic dependencies a prettier way :P
     self.states:set(require("start_menu").new(self.font))
   end
 end
