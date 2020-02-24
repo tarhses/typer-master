@@ -1,7 +1,7 @@
 local json = require "json"
+local class = require "class"
 
-local Leaderboard = {}
-Leaderboard.__index = Leaderboard
+local Leaderboard = class()
 
 --- Convert a float to a readable format (2 decimals only).
 -- @param x the float to convert
@@ -18,9 +18,7 @@ end
 -- @param n_letters number of letters completed during the game
 -- @param n_errors number of errors duting the game
 -- @param duration duration of the game (in seconds)
-function Leaderboard.new(font, name, score, n_words, n_letters, n_errors, duration)
-  local self = setmetatable(Leaderboard, {})
-  
+function Leaderboard:initialize(font, name, score, n_words, n_letters, n_errors, duration)
   self.font = font
   self.name = name
   self.score = score
@@ -48,8 +46,6 @@ function Leaderboard.new(font, name, score, n_words, n_letters, n_errors, durati
     n_letters = n_letters,
     n_errors = n_errors
   })
-  
-  return self
 end
 
 --- Callback when entering the state.
@@ -102,7 +98,7 @@ function Leaderboard:key_pressed(key)
       self.showing_stats = false
     else
       -- TODO: fix cyclic dependencies a prettier way :P
-      self.states:set(require("start_menu").new(self.font))
+      self.states:set(require("start_menu")(self.font))
     end
   end
 end

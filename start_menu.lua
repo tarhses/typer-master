@@ -1,17 +1,15 @@
 local utf8 = require "utf8"
+local class = require "class"
 local Game = require "game"
 
-local StartMenu = {}
-StartMenu.__index = StartMenu
+local StartMenu = class()
 
 local NAME_MAX_LENGTH = 24
 local FILL_CHAR = "_"
 
 --- Create a new StartMenu instance.
 -- @param font the font used to display the text on screen
-function StartMenu.new(font)
-  local self = setmetatable({}, StartMenu)
-  
+function StartMenu:initialize(font)
   self.font = font
   self.name = {}
   self.name_length = 0
@@ -19,8 +17,6 @@ function StartMenu.new(font)
   for i = 1, NAME_MAX_LENGTH do
     table.insert(self.name, string.byte(FILL_CHAR))
   end
-  
-  return self
 end
 
 --- Callback when entering the state.
@@ -51,7 +47,7 @@ function StartMenu:key_pressed(key)
       self.name[self.name_length] = string.byte(FILL_CHAR)
       self.name_length = self.name_length - 1
     elseif key == "return" then
-      self.states:set(Game.new(self.font, utf8.char(unpack(self.name, 1, self.name_length))))
+      self.states:set(Game(self.font, utf8.char(unpack(self.name, 1, self.name_length))))
     end
   end
 end

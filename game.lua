@@ -1,10 +1,10 @@
 local Timer = require "hump.timer"
+local class = require "class"
 local Leaderboard = require "leaderboard"
 local Word = require "word"
 local WORDS = require "words"
 
-local Game = {}
-Game.__index = Game
+local Game = class()
 
 local RIGHT_BONUS = 5
 local WRONG_MALUS = 3
@@ -26,9 +26,7 @@ end
 --- Create a new Game instance.
 -- @param font font used to display text
 -- @name the name of the player
-function Game.new(font, name)
-  local self = setmetatable({}, Game)
-  
+function Game:initialize(font, name)
   -- Game related
   self.font = font
   self.name = name
@@ -36,7 +34,7 @@ function Game.new(font, name)
   self.timer = DURATION
   
   -- Words
-  self.words = {Word.new(self.font, self:pick_word())}
+  self.words = {Word(self.font, self:pick_word())}
   self:new_word()
   
   -- Stats related
@@ -47,8 +45,6 @@ function Game.new(font, name)
   -- Screen shake related
   self.screenshake_x = 0
   self.screenshake_y = 0
-
-  return self
 end
 
 --- Callback when entering the state
@@ -87,7 +83,7 @@ function Game:new_word()
   self.word:tween(.4, {y = 0, a = 1}, "out-cubic")
   
   -- Add a new word below
-  local word = Word.new(self.font, self:pick_word())
+  local word = Word(self.font, self:pick_word())
   word.y = 64
   word.a = 0
   word:tween(.4, {a = .5})
@@ -100,7 +96,7 @@ function Game:update(dt)
   self.timer = self.timer - dt
   if self.timer <= 0 then
     self.timer = 0
-    self.states:set(Leaderboard.new(self.font, self.name, self.score, self.n_words, self.n_letters, self.n_errors, DURATION))
+    self.states:set(Leaderboard(self.font, self.name, self.score, self.n_words, self.n_letters, self.n_errors, DURATION))
   end
 end
 
@@ -127,7 +123,7 @@ end
 function Game:key_pressed(key)
   if key == "escape" then
     -- TODO: fix cyclic dependencies a prettier way :P
-    self.states:set(require("start_menu").new(self.font))
+    self.states:set(require("start_menu")(self.font))
   end
 end
 

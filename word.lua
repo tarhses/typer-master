@@ -1,23 +1,19 @@
 local utf8 = require "utf8"
 local Timer = require "hump.timer"
+local class = require "class"
 
-local Word = {}
-Word.__index = Word
+local Word = class()
 
 --- Create a new Word instance.
 -- @param font the font used to display the word
 -- @param text the rendered text
-function Word.new(font, text)
-  local self = setmetatable({}, Word)
-
+function Word:initialize(font, text)
   self.font = font
   self.chars = {utf8.codepoint(text, 1, #text)}
   self.cursor = 1
   self.x = 0
   self.y = 0
   self.a = 1
-  
-  return self
 end
 
 --- Get the next letter, pointed by the cursor.
