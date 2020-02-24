@@ -27,7 +27,7 @@ end
 
 function StartMenu:draw()
   local x = 0
-  local y = (love.graphics.getHeight() - self.font:getHeight() * 4) / 2
+  local y = (love.graphics.getHeight() - self.font:getHeight() * 3) / 2
   local w = love.graphics.getWidth()
   
   love.graphics.setColor(1, 1, 1, 1)

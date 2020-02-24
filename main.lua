@@ -1,3 +1,4 @@
+local Timer = require "hump.timer"
 local StateMachine = require "state_machine"
 local StartMenu = require "start_menu"
 
@@ -15,6 +16,7 @@ end
 
 function love.update(dt)
   states:call("update", dt)
+  Timer.update(dt)
 end
 
 function love.draw()

@@ -1,5 +1,5 @@
 local utf8 = require "utf8"
-local tween = require "tween"
+local Timer = require "hump.timer"
 
 local Word = {}
 Word.__index = Word
@@ -33,14 +33,6 @@ function Word:consume_letter()
   return self.cursor > #self.chars
 end
 
---- Update the instance.
--- @param dt elapsed time since last frame (in seconds)
-function Word:update(dt)
-  if self._tween then
-    self._tween:update(dt)
-  end
-end
-
 --- Display the word on screen.
 function Word:draw()
   local y = self.y + (love.graphics.getHeight() - self.font:getHeight()) / 2
@@ -56,7 +48,7 @@ end
 --- Tween the word attributes.
 -- @see tween.lua
 function Word:tween(duration, ...)
-  self._tween = tween.new(duration, self, ...)
+  Timer.tween(duration, self, ...)
 end
 
 return Word

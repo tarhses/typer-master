@@ -70,12 +70,12 @@ end
 function Game:new_word()
   -- Get rid of the current word
   if self.word then
-    self.word:tween(0.6, {y = -love.graphics.getHeight(), a = 0}, "inCubic")
+    self.word:tween(0.6, {y = -love.graphics.getHeight(), a = 0}, "in-cubic")
   end
   
   -- Move the new word up
   self.word = self.words[#self.words]
-  self.word:tween(0.4, {y = 0, a = 1}, "outCubic")
+  self.word:tween(0.4, {y = 0, a = 1}, "out-cubic")
   
   -- Add a new word below
   local word = Word.new(self.font, self:pick_word())
@@ -93,11 +93,6 @@ function Game:update(dt)
   if self.timer <= 0 then
     self.timer = 0
     self.states:set(Leaderboard.new(self.font, self.score, self.n_words, self.n_letters, self.n_errors, DURATION))
-  end
-  
-  -- Words
-  for _, word in ipairs(self.words) do
-    word:update(dt)
   end
 end
 
