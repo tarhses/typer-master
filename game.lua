@@ -8,9 +8,9 @@ Game.__index = Game
 
 local RIGHT_BONUS = 5
 local WRONG_MALUS = 3
-local DURATION = 2 * 60 + 1
+local DURATION = 5--2 * 60 + 1
 
---- Return a given time as a readable format (mm:ss).
+--- Convert a time to a readable format (mm:ss).
 -- @param timer given time (in seconds)
 -- @return a string containing the formatted timer
 local function format_timer(timer)
@@ -25,11 +25,13 @@ end
 
 --- Create a new Game instance.
 -- @param font font used to display text
-function Game.new(font)
+-- @name the name of the player
+function Game.new(font, name)
   local self = setmetatable({}, Game)
   
   -- Game related
   self.font = font
+  self.name = name
   self.score = 0
   self.timer = DURATION
   
@@ -49,6 +51,8 @@ function Game.new(font)
   return self
 end
 
+--- Callback when entering the state
+-- @param states state machine containing the state
 function Game:enter(states)
   self.states = states
 end
@@ -75,18 +79,18 @@ end
 function Game:new_word()
   -- Get rid of the current word
   if self.word then
-    self.word:tween(0.6, {y = -love.graphics.getHeight(), a = 0}, "in-cubic")
+    self.word:tween(.6, {y = -love.graphics.getHeight(), a = 0}, "in-cubic")
   end
   
   -- Move the new word up
   self.word = self.words[#self.words]
-  self.word:tween(0.4, {y = 0, a = 1}, "out-cubic")
+  self.word:tween(.4, {y = 0, a = 1}, "out-cubic")
   
   -- Add a new word below
   local word = Word.new(self.font, self:pick_word())
   word.y = 64
   word.a = 0
-  word:tween(0.4, {a = 0.5})
+  word:tween(.4, {a = .5})
   table.insert(self.words, word)
 end
 
@@ -96,7 +100,7 @@ function Game:update(dt)
   self.timer = self.timer - dt
   if self.timer <= 0 then
     self.timer = 0
-    self.states:set(Leaderboard.new(self.font, self.score, self.n_words, self.n_letters, self.n_errors, DURATION))
+    self.states:set(Leaderboard.new(self.font, self.name, self.score, self.n_words, self.n_letters, self.n_errors, DURATION))
   end
 end
 
@@ -134,8 +138,8 @@ function Game:text_input(char)
     self.score = self.score - WRONG_MALUS
     self.n_errors = self.n_errors + 1
     
-    -- TODO: screen shake :P
-    Timer.during(0.4, function()
+    -- Screen shake
+    Timer.during(.4, function()
       self.screenshake_x = love.math.random(-3, 3)
       self.screenshake_y = love.math.random(-3, 3)
     end, function()

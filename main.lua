@@ -14,6 +14,10 @@ function love.load()
   love.keyboard.setKeyRepeat(true)
 end
 
+function love.quit()
+  states:call("leave")
+end
+
 function love.update(dt)
   states:call("update", dt)
   Timer.update(dt)
@@ -25,6 +29,10 @@ end
 
 function love.keypressed(key)
   states:call("key_pressed", key)
+  
+  if key == "f11" then
+    love.window.setFullscreen(not love.window.getFullscreen())
+  end
 end
 
 function love.textinput(text)

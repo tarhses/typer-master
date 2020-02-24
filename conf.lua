@@ -12,7 +12,7 @@ function love.conf(t)
 
   t.window.title = "typer v1.0"       -- The window title (string)
   t.window.icon = nil                 -- Filepath to an image to use as the window's icon (string)
-  t.window.width = 1000               -- The window width (number)
+  t.window.width = 1200               -- The window width (number)
   t.window.height = 800               -- The window height (number)
   t.window.borderless = false         -- Remove all border visuals from the window (boolean)
   t.window.resizable = true           -- Let the window be user-resizable (boolean)
