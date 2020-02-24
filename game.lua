@@ -1,3 +1,4 @@
+local Timer = require "hump.timer"
 local Leaderboard = require "leaderboard"
 local Word = require "word"
 local WORDS = require "words"
@@ -40,6 +41,10 @@ function Game.new(font)
   self.n_words = 0
   self.n_letters = 0
   self.n_errors = 0
+  
+  -- Screen shake related
+  self.screenshake_x = 0
+  self.screenshake_y = 0
 
   return self
 end
@@ -88,7 +93,6 @@ end
 --- Handle game update.
 -- @dt time elapsed since last frame (in seconds)
 function Game:update(dt)
-  -- Timer
   self.timer = self.timer - dt
   if self.timer <= 0 then
     self.timer = 0
@@ -98,6 +102,10 @@ end
 
 --- Display the game on screen.
 function Game:draw()
+  -- Screen shake
+  love.graphics.translate(self.screenshake_x, self.screenshake_y)
+  
+  -- Words
   local w = love.graphics.getWidth() - 2 * 24
   
   love.graphics.setColor(1, 1, 1, 1)
@@ -125,7 +133,14 @@ function Game:text_input(char)
     -- Wrong letter
     self.score = self.score - WRONG_MALUS
     self.n_errors = self.n_errors + 1
+    
     -- TODO: screen shake :P
+    Timer.during(0.4, function()
+      self.screenshake_x = love.math.random(-3, 3)
+      self.screenshake_y = love.math.random(-3, 3)
+    end, function()
+      self.screenshake_x, self.screenshake_y = 0, 0
+    end)
   end
 end
 
