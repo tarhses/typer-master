@@ -2,7 +2,7 @@ local Timer = require "hump.timer"
 local class = require "class"
 local Leaderboard = require "leaderboard"
 local Word = require "word"
-local WORDS = require "words"
+local WORDS = require "assets.words"
 
 local Game = class()
 
@@ -25,7 +25,7 @@ end
 
 --- Create a new Game instance.
 -- @param font font used to display text
--- @name the name of the player
+-- @param name the name of the player
 function Game:initialize(font, name)
   -- Game related
   self.font = font
@@ -91,7 +91,7 @@ function Game:new_word()
 end
 
 --- Handle game update.
--- @dt time elapsed since last frame (in seconds)
+-- @param dt time elapsed since last frame (in seconds)
 function Game:update(dt)
   self.timer = self.timer - dt
   if self.timer <= 0 then
@@ -128,7 +128,7 @@ function Game:key_pressed(key)
 end
 
 --- Handle text input.
--- @char character pressed (as utf-8)
+-- @param char character pressed (as utf-8)
 function Game:text_input(char)
   if char:lower() == self.word:get_letter() then
     -- Right letter

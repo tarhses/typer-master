@@ -34,7 +34,7 @@ function StartMenu:draw()
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setFont(self.font)
   love.graphics.printf({
-    {1, 1, 1, 0.7}, "Nom de l'équipe :\n\n",
+    {1, 1, 1, 0.7}, "Player Name :\n\n",
     {1, 1, 1}, utf8.char(unpack(self.name))
   }, x, y, w, "center")
 end

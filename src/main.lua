@@ -8,7 +8,7 @@ local states
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
   
-  font = love.graphics.newFont("JMH Typewriter mono.ttf", 48)
+  font = love.graphics.newFont("assets/ELEGANT TYPEWRITER.ttf", 54)
   states = StateMachine(StartMenu(font))
   
   love.keyboard.setKeyRepeat(true)

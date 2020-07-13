@@ -69,9 +69,9 @@ function Leaderboard:draw()
   
   if self.showing_stats then
     left = "Score :\n\n" ..
-      "Mots :\nMots/Seconde :\n\n" ..
-      "Lettres :\nLettres/Seconde :\n\n" ..
-      "Erreurs : "
+      "Words :\nWords/s :\n\n" ..
+      "Letters :\nLetters/s :\n\n" ..
+      "Errors : "
     right = self.score .. "\n\n" ..
       self.n_words .. "\n" .. format_float(self.n_words / self.duration) .. "\n\n" ..
       self.n_letters .. "\n" .. format_float(self.n_letters / self.duration) .. "\n\n" ..
